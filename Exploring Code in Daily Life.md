@@ -74,9 +74,28 @@ why?
 
 - File compression utility algorithm.
 
-link:
+link: https://github.com/ElvisKoech/Python-code-to-zip-and-compress-files/tree/main
 
-which lines from which files:
+which lines from which files: lines 18-35 from Python-code-to-zip-and-compress-files / main.py
+
+# Open the original zip file in read mode
+with zipfile.ZipFile('Zone_3_Road.zip', 'r') as original_zip:
+
+    # Create a new zip file in write mode
+    with zipfile.ZipFile('new.zip', 'w', compression=zipfile.ZIP_DEFLATED) as new_zip:
+
+        # Iterate over the files in the original zip file
+        for file in original_zip.filelist:
+
+            # Read the contents of the file
+            data = original_zip.read(file.filename)
+
+            # Write the contents of the file to the new zip file
+            new_zip.writestr(file.filename, data)
+
+# Replace the original zip file with the new zip file
+import os
+os.replace('new.zip', 'Zone_3_Road.zip')
 
 why?
 
@@ -223,9 +242,57 @@ why?
 
 - Online voting system mechanics.
 
-link:
+link: https://github.com/Bharati2301/Online-Voting-System-using-Python-and-MySQL/tree/main
 
-which lines from which files:
+which lines from which files: lines 390-437 from Online-Voting-System-using-Python-and-MySQL / final.py
+
+  def show_result(self):
+        query="SELECT Result.PartyID, party_table.PartyName,SUM(Vote_Count) AS 'Total_Count' FROM Result,party_table WHERE Party_table.Partyid = Result.partyID GROUP BY result.PartyID ORDER BY Total_Count DESC"
+        cur=self.db.cursor()
+        cur.execute(query)
+        print("\n\tVOTES FOR EACH PARTY\n")
+        print("Party ID   Party Name   Count")
+        for i in cur:
+            print("  ", i[0],"\t\t ",i[1],"\t  ",i[2],'\n')
+            
+    def party_candidate(self,Aadhaar):
+        query="select PartyId,PartyName from party_table where LeaderAadhaar='{}'".format(Aadhaar)
+        cur=self.db.cursor()
+        cur.execute(query)
+        for r in cur:
+            PartyId=r[0]
+            PartyName=r[1]
+        print("\nShowing candidate details for '{}' party\n".format(PartyName))
+        query_2="select voter_table.FirstName,voter_table.LastName,address.Locality,address.City,address.State from address,candidate_table,voter_table where candidate_table.DistrictId=address.DistrictId and candidate_table.Aadhaar=voter_table.Aadhaar and candidate_table.PartyId={}".format(PartyId)
+        cur2=self.db.cursor()
+        cur2.execute(query_2)
+        #print("  Name\t\t \t\tLocality\t\t \t\tCity\t\t \t\tState")
+        print("\t{:<15} {:<15} {:<10} {:10}".format("Name","Locality","City","State"))
+        for r in cur2:
+            name=r[0]+" "+r[1]
+            print("{:<15} \t{:<15} {:<10} {:<10}".format(name,r[2],r[3],r[4]))
+
+vs=voting_system()
+while True:
+    print("What do you want to do?\n")
+    print("SIGN UP\t LOGIN\t PARTY REGISTRATION\tVIEW RESULT\t LEAVE") 
+    task=input("What do you want to do? ")
+    if task.upper()=="SIGN UP":
+        print("\n\n\nSIGN UP:\n")
+        vs.sign_up()
+    elif task.upper()=="PARTY REGISTRATION":
+        print("\n\n\nPARTY REGISTRATION:\n")
+        vs.party_registration()
+    elif task.upper()=="LOGIN":
+        print("\n\n\nLOGIN:\n")
+        vs.login()
+    elif task.upper()=="VIEW RESULT":
+        vs.show_result()
+    elif task.upper()=="LEAVE":
+        print("\n\n\nBYE!!!")
+        quit()
+    else:
+        print("Invalid Input!")
 
 why?
 
