@@ -1,28 +1,45 @@
 - Code that specifies when an alarm clock should start making audible sounds.
 
-link: https://github.com/ROSHAN-KHANDAGALE/Alarm-Clock
+link: [https://github.com/ROSHAN-KHANDAGALE/Alarm-Clock](https://github.com/tilak30/alarm-clock/tree/master)
 
-which lines from which files
+which lines from which files: lines 3-36 from alarm-clock / alarm-clock.py
 
-import datetime
-import time
+def sound(p):
+    for i in range(10):
+        winsound.MessageBeep(-1)
+        time.sleep(1)
 
-def set_alarm(alarm_time):
-    while True:
-        current_time = datetime.datetime.now().strftime("%H:%M:%S")
-        
-        if current_time == alarm_time:
-            print("Wake up! It's time for your alarm.")
-            # You can add code here to play a sound or perform any other action
-            break
-        
-        time.sleep(1)  # Check the time every second
 
-# Set the alarm time in HH:MM:SS format
-alarm_time = "07:00:00"
-set_alarm(alarm_time)
+def when_sound(p):
+    time.sleep(p)
+    sound(p)
 
-why? lines 14 & 15 indicate that the operating system will sound the alarm when the current time is equal to the alarm time and display the message "Wake up! It's time for your alarm." 
+
+def input_no(n):
+    if (n == 1):
+        x = int(input('Enter hours : '))
+        when_sound(60*60*x)
+    elif (n==2):
+        x = int(input('Enter minutes : '))
+        when_sound(60*x)
+    elif (n == 3):
+        x = int(input('Enter seconds : '))
+        when_sound(x)
+    elif (n == 4) :
+        hours = int(input('Enter Hours : '))
+        min = int(input('Enter minutes : '))
+        sec = int(input('Enter seconds : '))
+        when_sound((hours*60*60)+(min*60)+(sec))
+
+
+
+
+def main():
+    print("enter time after which alarm should ring: press 1)for hours 2)for minutes 3)for seconds 4)for combination")
+    n = int(input(":"))
+    input_no(n)
+
+why?  
 
 - Code for a rocket targeting system.
 
@@ -145,9 +162,39 @@ why?
   
 - E-commerce checkout system process.
 
-link:
+link: https://github.com/JeremyTallant/online_store/tree/main
 
-which lines from which files:
+which lines from which files: lines 16-43 from online_store / main.py
+
+def run(self):
+        while True:
+            print("\nWelcome to the Online Store!")
+            print("1. Browse products")
+            print("2. View cart")
+            print("3. Checkout")
+            print("4. Load money")
+            print("5. Exit")
+
+            choice = input("Enter your choice (1-5): ")
+
+            if choice == "1":
+                self.store.browse()
+                product_id = input("Enter the ID of the product you'd like to add to your cart (or 'q' to go back): ")
+                if product_id.lower() != 'q':
+                    self.store.add_to_cart(product_id, self.user.shopping_cart)
+            elif choice == "2":
+                self.user.shopping_cart.view_cart()
+            elif choice == "3":
+                self.store.checkout(self.user)
+            elif choice == '4':
+                amount = float(input("Enter the amount of fake money you'd like to load: "))
+                self.user.load_fake_money(amount)
+            elif choice == "5":
+                print("Thank you for shopping with us. Goodbye!")
+                break
+            else:
+                print("Invalid input. Please try again.")
+
 
 why?
   
@@ -414,10 +461,40 @@ while True:
 
 why?
 
-3. Code for opening a new tab on Chrome
+3. Code for face recognition on electronic devices
 
-link:
+link: https://github.com/fis-11/faceDET/tree/main
 
-which lines from which files:
+which lines from which files: lines 15-43 from faceDET / detector.py
+
+def getProfile(id):
+    conn=sqlite3.connect('faceBase.db')
+    cmd="SELECT * FROM people WHERE ID="+str(id)
+    cursor=conn.execute(cmd)
+    profile=None
+    for row in cursor:
+        profile=row
+    conn.close()
+    return profile
+    
+#id=0
+cam=cv2.VideoCapture(0)
+#font=cv2.cv.InitFont(cv2.cv.CV_FONT_HERSHEY_COMPLEX_SMALL,5,1,0,4)
+font=cv2.FONT_HERSHEY_SIMPLEX
+fontscale=1
+fontcolor=(255,255,0)
+while True:
+    ret,img=cam.read();
+    gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+    #faces=faceCascade.detectMultiScale(gray,1.3,5);
+    faces=faceCascade.detectMultiScale(gray, scaleFactor=1.2, minNeighbors=5); #,minSize=(100, 100), flags=cv2.CascadeClassifier
+    for(x,y,w,h) in faces:
+        id,conf=recognizer.predict(gray[y:y+h,x:x+w])
+        cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),2)
+        profile=getProfile(id)
+        if (profile!=None):
+            cv2.putText(img,str(profile[1]),(x,y+h+30),font,fontscale,fontcolor)                    
+        cv2.imshow("face",img)
+        cv2.waitKey(10)
 
 why?
