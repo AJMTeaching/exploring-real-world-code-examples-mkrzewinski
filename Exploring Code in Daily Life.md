@@ -298,9 +298,35 @@ why?
 
 - Automated email response system.
 
-link:
+link: https://github.com/thekamik/email-automation-with-gpt-ai-and-python/tree/main
 
-which lines from which files:
+which lines from which files: lines 74-98 from email-automation-with-gpt-ai-and-python / email_bot.py
+
+def send_email(self, subject, body, receiver_email):
+        
+        # Create a multipart message and set headers
+        message = MIMEMultipart()
+        message["From"] = self.sender_email
+        message["To"] = receiver_email
+        message["Subject"] = subject
+
+        # Add body to email
+        message.attach(MIMEText(str(body), "plain"))
+
+        # Add attachment to message and convert message to string
+        text = message.as_string()
+
+        # Log in to server using secure context and send email
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL(self.mail_host, self.SMTP_SSL, context=context) as server:
+            server.login(self.sender_email, self.password)
+            server.sendmail(self.sender_email, receiver_email, text)
+
+        # Add email to send folder, and mark email as seen
+        imap = imaplib.IMAP4_SSL(self.mail_host, self.IMAP_SSL)
+        imap.login(self.sender_email, self.password)
+        imap.append(self.sent_folder, '\\Seen', imaplib.Time2Internaldate(time.time()), text.encode('utf8'))
+        imap.logout()
 
 why?
 
@@ -308,17 +334,83 @@ Personal blurbs
 
 1. Code for a do not disturb notification
 
-link:
+link: https://github.com/josephcslater/Do-Not-Disturb/tree/master
 
-which lines from which files:
+which lines from which files: lines 93-138 from Do-Not-Disturb / dnd.py
+
+if numin > 4.01 or colloc != 0:
+    a5 = subprocess.Popen(['killall sleep -s;sleep ' + str(numin * 60) + ';defaults -currentHost write \
+                     ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturb -boolean false; \
+                     defaults -currentHost delete ~/Library/Preferences/ByHost/com.apple.notificationcenterui \
+                     doNotDisturbDate; killall NotificationCenter'], shell=True)
+    print('Sleeping for ' + str(numin) + ' min.')
+    logging.debug('Minute Mode')
+else:
+    a5 = subprocess.Popen(['sleep ' + str(numin * 3600) + ';defaults -currentHost write \
+                     ~/Library/Preferences/ByHost/com.apple.notificationcenterui doNotDisturb -boolean false; \
+                     defaults -currentHost delete ~/Library/Preferences/ByHost/com.apple.notificationcenterui \
+                     doNotDisturbDate; killall NotificationCenter'], shell=True)
+    numin = numin
+    logging.debug('Sleeping for ' + str(numin) + ' min.')
+    logging.warning(
+        'Hour Mode- to never be entered again! Please report this error.')
+
+wakehour = curhour
+logging.debug('wakehour temp')
+logging.debug(wakehour)
+
+wakemin = numin + curmin
+
+logging.debug('wakemin temp')
+logging.debug(wakemin)
+
+while wakemin > 59:
+    logging.debug('swapping min for hour')
+    wakemin = wakemin - 60
+    logging.debug(wakemin)
+    wakehour = wakehour + 1
+    logging.debug(wakehour)
+
+strwakemin = str(wakemin)
+
+if wakehour > 12:
+    wakehour = wakehour - 12
+
+logging.debug(strwakemin)
+logging.debug(str.find(strwakemin, '.'))
+if str.find(strwakemin, '.') == 1:
+    strwakemin = '0' + strwakemin
+    logging.debug(strwakemin)
+
+print('Do not disturb set until ' + str(wakehour) + ':' + strwakemin[:2]
+      + '. (' + str(numin)[:-2] + ' minutes.)')
 
 why?
 
-2. Code for a read message notification
+2. Code for checking battery percentage
 
-link:
+link: https://github.com/HxnDev/Battery-Percentage-Notifier/tree/main
 
-which lines from which files:
+which lines from which files: lines 6-23 from Battery-Percentage-Notifier / main.py
+
+def conversion(sec):    # Will convert seconds into Hrs and minutes
+    second = sec % (24*3600)
+    hour = second // 3600
+    second %= 3600
+    minute = second // 60
+    second %= 60
+    return hour, minute
+
+
+while True:
+    battery = psutil.sensors_battery()  # Gets battery information
+    h, m = conversion(battery.secsleft)     # Converting them into hours and minutes
+    notification.notify(    # Notifying
+        title="Battery Percentage",
+        message=f'{h}Hr {m}Min {battery.percent}% remaining',
+        timeout=10
+    )
+    time.sleep(60*60)   # Notifies every hour
 
 why?
 
