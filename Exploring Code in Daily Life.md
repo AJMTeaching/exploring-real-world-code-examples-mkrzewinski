@@ -39,7 +39,7 @@ def main():
     n = int(input(":"))
     input_no(n)
 
-why?  
+why? def input_no (n) allows us to schedule the alarm for the alarm for a specific time (hour, minute, second) and the def main () allows for the action to be executed at that specific time
 
 - Code for a rocket targeting system.
 
@@ -87,7 +87,7 @@ def Mainloop():
 
 Mainloop()
 
-why?
+why? line 298 allows for the missile to stop firing at the target
 
 - File compression utility algorithm.
 
@@ -114,7 +114,7 @@ with zipfile.ZipFile('Zone_3_Road.zip', 'r') as original_zip:
 import os
 os.replace('new.zip', 'Zone_3_Road.zip')
 
-why?
+why? lines 21 and 22 allow us to create a zip file and lines 33-35 allow for the replacement of the original file to become a zip file
 
 - Weather forecasting algorithm.
 
@@ -158,7 +158,7 @@ def enter_data(year):
 
     return data_list
 
-why?
+why? lines 24-33 allow us to view the minimum and maximum temperatures for a specific day as well as view any rain that may comeabout as well as other features such as humidity.
   
 - E-commerce checkout system process.
 
@@ -196,7 +196,7 @@ def run(self):
                 print("Invalid input. Please try again.")
 
 
-why?
+why? lines 34-40 allow us to checkout any items that we wish to purchase on the respected website and then the transaction is finalized on line 40 with the message displaying "Thank you for shopping with us. Goodbye!" What follows is an error message that requires the user to either exit the tab or return to the homescreen.
   
 - Social media post scheduler.
 
@@ -218,7 +218,7 @@ def schedule_tweet(s, delay, api_keys, message):
                                                  message))
     s.run()
 
-why?
+why? lines 7-12 grant us access to post to a specific social media platform, in this case, Twitter. On Twitter, we have the option to schedule a tweet, which is accomplished by lines 14-19.
   
 - Fitness app calorie counter.
 
@@ -285,7 +285,7 @@ def totalMonthTable(user):
     df = pd.read_csv('Total.csv')
     print(df.to_markdown())
 
-why?
+why? lines 48-91 allow us to insert a specific amount of food for a given month and from there, the calculations are prepared to be executed by lines 99-105. This will calculate the total number of caloric intake in a given month based on the inputs that were provided in lines 48-91.
 
 - Online voting system mechanics.
 
@@ -341,7 +341,7 @@ while True:
     else:
         print("Invalid Input!")
 
-why?
+why? lines 399-414 allow us to select a candidate for which we need to supply our first and last name and address. Once completed, lines 416-436 then ask the user what they wish to do after voting. If the voter is satisfied with their vote, they may wish to exit the sight as demonstrated in lines 432-436. 
 
 - Automated email response system.
 
@@ -375,7 +375,7 @@ def send_email(self, subject, body, receiver_email):
         imap.append(self.sent_folder, '\\Seen', imaplib.Time2Internaldate(time.time()), text.encode('utf8'))
         imap.logout()
 
-why?
+why? Lines 74-80 help to specify from whom the email was received and to who it should be sent to. Lines 82-98 allow the user with the self-automated email to insert a description of the email as an attachment so that the person who sent the email to the person with an automated email response will automatically receive an automated email.
 
 Personal blurbs
 
@@ -432,7 +432,7 @@ if str.find(strwakemin, '.') == 1:
 print('Do not disturb set until ' + str(wakehour) + ':' + strwakemin[:2]
       + '. (' + str(numin)[:-2] + ' minutes.)')
 
-why?
+why? Since Do Not Disturb is a feature that involves silencing notifications for a definite/indefinite amount of time. Lines 93-108 allow for the notifications to be silenced, while lines 137-138 allow for this function to be executed until a certain time that the user has decided for the notifications to be silenced until. 
 
 2. Code for checking battery percentage
 
@@ -448,7 +448,6 @@ def conversion(sec):    # Will convert seconds into Hrs and minutes
     second %= 60
     return hour, minute
 
-
 while True:
     battery = psutil.sensors_battery()  # Gets battery information
     h, m = conversion(battery.secsleft)     # Converting them into hours and minutes
@@ -459,7 +458,7 @@ while True:
     )
     time.sleep(60*60)   # Notifies every hour
 
-why?
+why? Lines 6-14 are responsible for converting hours and minutes into seconds, which allow for the battery percentage to be read to any given second, which makes the battery life that is displayed to be a more accurate reading. Lines 15-23 allow for the function of the battery percentage to be retrieved to the user as displayed by lines 15 & 16. This retrieves the battery information to the user and allows for the user to access their battery percentage in that given second.
 
 3. Code for face recognition on electronic devices
 
@@ -497,4 +496,4 @@ while True:
         cv2.imshow("face",img)
         cv2.waitKey(10)
 
-why?
+why? lines 15-23 allow for the electronic device to process the face and recognize it. Lines 25-36 give the command for what the electronic device to do if the face shown is in fact the face of interest. Lines 40-43 give the command for a face that is not familiar and therefore, this ends up in the wait section, and the electronic device cannot do further commands until the proper face is identified.
